@@ -13,11 +13,26 @@ public class UsuarioRepositoryTest {
     public void setUp() {
         repository = new UsuarioRepository();
     }
-
+    // creio que esse teste ja cobre o salvar na memoria, buscar email e ver se existe no array
    @Test
-    public void deveNaoLancarNullSeEmailForEncontrado(){
+    void deveRetornarUsuarioQuandoEmailExistir(){
         repository.salvar(new Usuario("teste@gmail.com","123456"));
+
         Usuario encontrado = repository.buscarPorEmail("teste@gmail.com");
+
         assertNotNull(encontrado);
+        assertEquals("teste@gmail.com",encontrado.getEmail());
+    }
+
+    @Test
+    void deveRetornarUsuarioQuandoIdExistir(){
+        repository.salvar(new Usuario("teste@gmail.com","123456"));
+        Usuario segundo = new Usuario("teste@gmail.com","123456");
+        repository.salvar(segundo);
+
+        Usuario encontrado = repository.buscarPorId(segundo.getId());
+
+        assertNotNull(encontrado);
+        assertEquals(segundo.getId(),encontrado.getId());
     }
 }
