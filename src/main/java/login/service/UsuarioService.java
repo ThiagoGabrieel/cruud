@@ -4,7 +4,7 @@ import login.model.Usuario;
 import login.repository.UsuarioRepository;
 
 public class UsuarioService {
-    private UsuarioRepository repository = new UsuarioRepository();
+    private UsuarioRepository repository = new  UsuarioRepository();
     private Usuario usuario;
 
     public Usuario cadastrar(String email, String senha) {
