@@ -38,12 +38,13 @@ public class UsuarioServiceTest {
     //esse teste mostra que está jogando o aviso na tela quando a senha é incorreta
     // se o teste passar, é porque ta mostrando. Se não, não está (porque a senha ta certa)
     @Test
-    public void deveLancarExcecaoQuandoSenhaDeLoginEIncorreta() {
-
+    public void deveLancarExcecaoQuandoSenhaDeLoginForIncorreta() {
         usuarioService.cadastrar("teste@gmail.com", "123456");
-        assertDoesNotThrow(() -> {
-            usuarioService.login("teste@gmail.com", "123000");
+        assertThrows(IllegalArgumentException.class, () ->{
+           usuarioService.login("teste@gmail.com", "123555");
         });
+
+
     }
 
     @Test
