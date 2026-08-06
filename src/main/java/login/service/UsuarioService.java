@@ -4,7 +4,8 @@ import login.model.Usuario;
 import login.repository.UsuarioRepository;
 
 public class UsuarioService {
-    private final UsuarioRepository repository = new  UsuarioRepository();
+    private UsuarioRepository repository = new  UsuarioRepository();
+    private Usuario usuario;
 
     public Usuario cadastrar(String email, String senha) {
 
@@ -48,6 +49,8 @@ public class UsuarioService {
             throw new IllegalArgumentException("Invalido. Esse email já foi cadastrado!");
         }
         usuario.setEmail(email);
+        repository.salvar(usuario);
+
         System.out.println("Email atualizado com sucesso!");
 
         return usuario;
@@ -66,17 +69,15 @@ public class UsuarioService {
             throw new IllegalArgumentException("Sua senha não pode ser igual a anterior");
         }
         usuario.setSenha(senhaDigitada);
+        repository.salvar(usuario);
+
         System.out.println("Senha atualizada com sucesso!");
 
         return usuario;
     }
 
     public void deletar(long id, String senha){
-        Usuario usuario = repository.buscarPorId(id);
 
-        if(usuario == null) {
-            throw new IllegalArgumentException("Usuario não encontrado!");
-        }
         if(!usuario.verificarSenha(senha)){
             throw new IllegalArgumentException("Senha incorreta!");
         }
@@ -85,11 +86,7 @@ public class UsuarioService {
         System.out.println("Usuario deletado");
     }
 
-    public boolean validarSenha(long id, String senha){
-        Usuario usuario = repository.buscarPorId(id);
-        if(usuario == null) {
-            throw new IllegalArgumentException("Usuario nao encontrado!");
-        }
+    public boolean validarSenha(String senha){
         if(!usuario.verificarSenha(senha)){
             throw new IllegalArgumentException("Senha incorreta!");
         }
